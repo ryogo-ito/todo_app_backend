@@ -18,10 +18,16 @@ func SetRouter(e *echo.Echo) error {
 	e.Use(middleware.Recover())
 	e.Use(middleware.CORS())
 
-	e.GET("/api/todos", GetTodosHandler)
-	e.POST("api/todos", AddTodoHandler)
-	e.PUT("api/todos/:todoID", ChangeCompletedTodoHandler)
-	e.DELETE("/api/todos/:todoID", DeleteTodoHandler)
+	api := e.Group("/api")
+	{
+		todosApi := api.Group("/todos")
+		{
+			todosApi.GET("", GetTodosHandler)
+			todosApi.POST("", AddTodoHandler)
+			todosApi.PUT("/:todoID", ChangeCompletedTodoHandler)
+			todosApi.DELETE("/:todoID", DeleteTodoHandler)
+		}
+	}
 
 	err := e.Start(":8000")
 	return err
