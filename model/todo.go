@@ -6,9 +6,9 @@ import (
 )
 
 type Todo struct {
-	ID        uuid.UUID
-	Name      string
-	Completed bool
+	ID        uuid.UUID `json:"id"`
+	Name      string    `json:"name"`
+	Completed bool      `json:"completed"`
 }
 
 func GetTodos() ([]Todo, error) {
